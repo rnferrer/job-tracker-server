@@ -12,3 +12,53 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  username    String       @unique
+  appliedJobs AppliedJob[]
+  savedJobs   SavedJob[]
+}
+
+model AppliedJob {
+  id         Int         @id @default(autoincrement())
+  jobTitle   String
+  location   String
+  url        String
+  status     Status      @default(APPLIED)
+  lastEdit   DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int
+  interviews Interview[]
+}
+
+model SavedJob {
+  id       Int      @id @default(autoincrement())
+  jobTitle String
+  location String
+  url      String
+  saveDate DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+}
+
+model Interview {
+  id           Int        @id @default(autoincrement())
+  title        String
+  date         DateTime
+  start        DateTime
+  end          DateTime
+  allDay       Boolean
+  notes        String     @db.VarChar(500)
+  appliedJob   AppliedJob @relation(fields: [appliedJobId], references: [id])
+  appliedJobId Int
+}
+
+enum Status {
+  APPLIED
+  INTERVIEW
+  NORESPONSE
+  OFFER
+  REJECTED
+}
