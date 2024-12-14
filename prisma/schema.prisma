@@ -19,6 +19,7 @@ model User {
   username    String       @unique
   appliedJobs AppliedJob[]
   savedJobs   SavedJob[]
+  interviews  Interview[]
 }
 
 model AppliedJob {
@@ -53,6 +54,8 @@ model Interview {
   notes        String     @db.VarChar(500)
   appliedJob   AppliedJob @relation(fields: [appliedJobId], references: [id])
   appliedJobId Int
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
 }
 
 enum Status {

@@ -2,8 +2,10 @@ import { Router } from "express"
 
 const router = Router()
 
-router.get("/:userId")
+router.get("/:jobId")
+//May need to rename route to be more intuitive
+router.get("/user/:userId")
 router.post("/")
-router.patch("/:interviewId")
+router.put("/:interviewId")
 
 export default router
