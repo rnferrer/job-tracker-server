@@ -11,8 +11,11 @@ export const getInterviews = async (req: Request, res: Response): Promise<void> 
         appliedJobId
       }
     })
+    res.json(interviews)
   } catch (error: any){
-    
+    res
+      .status(500)
+      .json({message: error});
   }
 }
 
@@ -24,8 +27,11 @@ export const getAllInterviews = async (req: Request, res: Response): Promise<voi
         userId
       }
     })
+    res.send(interviews)
   } catch (error: any){
-    
+    res
+      .status(500)
+      .json({message: error});
   }
 }
 
@@ -55,7 +61,9 @@ export const createInterview = async (req: Request, res: Response): Promise<void
     });
     res.status(201).json(newInterview)
   } catch (error:any) {
-
+    res
+      .status(500)
+      .json({message: error});
   }
 }
 
@@ -85,6 +93,24 @@ export const updateInterview = async (req: Request, res: Response): Promise<void
     });
     res.status(201).json(updatedInterview)
   } catch (error:any) {
+    res
+      .status(500)
+      .json({message: error});
+  }
+}
 
+export const deleteInterview = async (req: Request, res: Response): Promise<void> => {
+  const interviewId = parseInt(req.params.interviewId);
+  try {
+    const job = await prisma.appliedJob.delete({
+      where:{
+        id: interviewId
+      }
+    })
+    res.json({message:"Deleted job"})
+  } catch (error: any){
+    res
+      .status(500)
+      .json({message: error})
   }
 }
