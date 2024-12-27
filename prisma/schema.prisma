@@ -23,25 +23,27 @@ model User {
 }
 
 model AppliedJob {
-  id         Int         @id @default(autoincrement())
-  jobTitle   String
-  location   String
-  url        String
-  status     Status      @default(APPLIED)
-  lastEdit   DateTime    @default(now())
-  user       User        @relation(fields: [userId], references: [id])
-  userId     Int
-  interviews Interview[]
+  id           Int         @id @default(autoincrement())
+  job_title    String
+  location     String
+  url          String
+  company_name String
+  status       Status      @default(APPLIED)
+  last_edited  DateTime    @default(now())
+  user         User        @relation(fields: [userId], references: [id])
+  userId       Int
+  interviews   Interview[]
 }
 
 model SavedJob {
-  id       Int      @id @default(autoincrement())
-  jobTitle String
-  location String
-  url      String
-  saveDate DateTime @default(now())
-  user     User     @relation(fields: [userId], references: [id])
-  userId   Int
+  id           Int      @id @default(autoincrement())
+  job_title    String
+  location     String
+  url          String
+  company_name String
+  save_date    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int
 }
 
 model Interview {

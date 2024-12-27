@@ -21,22 +21,24 @@ export const getAppliedJobs = async (req: Request, res: Response): Promise<void>
 
 export const createAppliedJob = async (req: Request, res: Response): Promise<void> => {
   const {
-    jobTitle,
+    job_title,
     location,
     url,
     status,
-    lastEdit,
+    company_name,
+    last_edited,
     userId
   } = req.body;
 
   try {
     const newJob = await prisma.appliedJob.create({
       data:{
-        jobTitle,
+        job_title,
         location,
         url,
         status,
-        lastEdit,
+        company_name,
+        last_edited,
         userId
       }
     });
@@ -50,11 +52,13 @@ export const createAppliedJob = async (req: Request, res: Response): Promise<voi
 
 export const updateAppliedJob = async (req:Request, res: Response): Promise<void> => {
   const {
-    jobTitle,
+    job_title,
     location,
     url,
     status,
-    lastEdit,
+    company_name,
+    last_edited,
+    userId,
     id
   } = req.body;
 
@@ -64,14 +68,16 @@ export const updateAppliedJob = async (req:Request, res: Response): Promise<void
         id
       },
       data:{
-        jobTitle,
+        job_title,
         location,
         url,
         status,
-        lastEdit
+        company_name,
+        last_edited,
+        userId
       }
     })
-    res.json("Job has been updated")
+    res.json(updatedJob)
   } catch (error: any){
     res
       .status(500)

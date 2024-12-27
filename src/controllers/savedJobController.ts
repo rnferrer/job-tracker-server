@@ -21,20 +21,22 @@ export const getSavedJobs = async (req: Request, res: Response): Promise<void> =
 
 export const createSavedJob = async (req: Request, res: Response): Promise<void> => {
   const {
-    jobTitle,
+    job_title,
     location,
     url,
-    saveDate,
+    company_name,
+    save_date,
     userId
   } = req.body;
 
   try {
     const newJob = await prisma.savedJob.create({
       data:{
-        jobTitle,
+        job_title,
         location,
         url,
-        saveDate,
+        company_name,
+        save_date,
         userId
       }
     });
